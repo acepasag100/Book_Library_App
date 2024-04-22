@@ -40,8 +40,6 @@ public class AddActivity extends AppCompatActivity {
 
                 MyDatabaseHelper db = new MyDatabaseHelper(AddActivity.this);
                 db.addBook(title, author, pageNumber);
-
-
             }
         });
     }
