@@ -1,8 +1,13 @@
+package com.example.booklibraryapp;
+
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     private Context context;
     private static final String DATABASE_NAME = "BookLibrary.db";
@@ -14,7 +19,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_AUTHOR = "AUTHOR";
     private static final String COLUMN_PAGES = "PAGES";
 
-    public DatabaseHelper(Context context) {
+    public MyDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
     }
@@ -37,5 +42,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void addBook(String title, String author, int pages){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+
+        cv.put(COLUMN_TITLE, title);
+        cv.put(COLUMN_AUTHOR, author);
+        cv.put(COLUMN_PAGES, pages);
+        long result = db.insert(TABLE_NAME, null, cv);
+        if (result == -1){
+            Toast.makeText(context, "Failed", Toast.LENGTH_LONG).show();
+        }
+        else{
+            Toast.makeText(context, "Added Successfully", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public Cursor readAllData(){
+        String query = "SELECT * FROM "+TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if(db != null){
+            cursor = db.rawQuery(query, null);
+        }
+        return cursor;
     }
 }
