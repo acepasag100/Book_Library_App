@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -26,6 +27,15 @@ public class MainActivity extends AppCompatActivity {
     private MyDatabaseHelper db;
     private ArrayList<String> id, title, author, pages;
     private CustomAdapter adapter;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1){
+            recreate();
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         pages = new ArrayList<>();
         displayData();
 
-        adapter = new CustomAdapter(MainActivity.this, id, title, author, pages);
+        adapter = new CustomAdapter(MainActivity.this, this, id, title, author, pages);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 

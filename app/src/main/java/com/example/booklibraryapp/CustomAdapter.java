@@ -1,5 +1,6 @@
 package com.example.booklibraryapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -15,13 +16,16 @@ import java.util.ArrayList;
 
 public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHolder> {
     private Context context;
+    private Activity activity;
     private ArrayList<String> id, title, author, pages;
 
-    public CustomAdapter(Context context,
+    public CustomAdapter(Activity activity,
+                         Context context,
                          ArrayList id,
                          ArrayList title,
                          ArrayList author,
                          ArrayList pages){
+        this.activity = activity;
         this.context = context;
         this.id = id;
         this.title = title;
@@ -49,7 +53,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             intent.putExtra("title", String.valueOf(title.get(position)));
             intent.putExtra("author", String.valueOf(author.get(position)));
             intent.putExtra("pages", String.valueOf(pages.get(position)));
-            context.startActivity(intent);
+            //context.startActivity(intent);
+            activity.startActivityForResult(intent, 1);
         });
     }
 
