@@ -35,12 +35,16 @@ public class UpdateActivity extends AppCompatActivity {
         etUpdatePageNum = findViewById(R.id.etUpdatePageNum);
         btnUpdate = findViewById(R.id.btnUpdate);
 
-        btnUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
+        btnUpdate.setOnClickListener(v -> {
+            MyDatabaseHelper myDB = new MyDatabaseHelper(UpdateActivity.this);
+            id = etUpdateID.getText().toString();
+            title = etUpdateTitle.getText().toString();
+            author = etUpdateAuthor.getText().toString();
+            pages = etUpdatePageNum.getText().toString();
+            myDB.updateData(id, title, author, pages);
         });
+
+        getIntentContent();
     }
 
     private void getIntentContent(){
