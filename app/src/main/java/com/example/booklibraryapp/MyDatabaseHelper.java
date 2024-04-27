@@ -76,7 +76,18 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_PAGES, pageNumber);
         long result = db.update(TABLE_NAME, cv, "ID=?", new String[]{id});
         if(result == -1){
-            Toast.makeText(context, "Failed to update", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Failed to update data", Toast.LENGTH_LONG).show();
+        }
+        else{
+            Toast.makeText(context, "Data Updated", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void deleteData(String id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result = db.delete(TABLE_NAME, "ID=?", new String[]{id});
+        if(result == -1){
+            Toast.makeText(context, "Failed to remove data", Toast.LENGTH_LONG).show();
         }
         else{
             Toast.makeText(context, "Data Updated", Toast.LENGTH_LONG).show();
